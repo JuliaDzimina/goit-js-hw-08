@@ -83,12 +83,38 @@ const images = [
     
   gallery.insertAdjacentHTML('afterbegin', makeup );
 
-  gallery.addEventListener('click', e => {
+  gallery.addEventListener('click', openModal)
+
+  function openModal(e){
     e.preventDefault();
     if(e.target === e.currentTarget){
       return;
     }
-    const imageSrc = e.target.dataset.source;
-    console.log(imageSrc);
 
-  })
+
+    const bigImageSrc = e.target.dataset.source;
+    console.log(bigImageSrc);
+    const instance = basicLightbox.create(
+      ` <img src="${bigImageSrc}" alt="${images.description}" width="800" height="600"> `,
+    {
+      onShow: () => {
+        document.addEventListener('keyup', closeModal);
+      },
+      
+      onClose: () => {
+        document.removeEventListener('keyup', closeModal);
+      }
+    }
+    ); 
+    
+    function closeModal(e){
+    if (e.code === 'Escape') {
+      instance.close();
+    }
+  };
+
+  instance.show()
+  };
+
+ 
+  
