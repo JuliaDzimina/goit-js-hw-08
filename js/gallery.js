@@ -87,15 +87,16 @@ const images = [
 
   function openModal(e){
     e.preventDefault();
-    if(e.target === e.currentTarget){
+    if(e.target.nodeName !== 'IMG'){
       return;
     }
 
 
     const bigImageSrc = e.target.dataset.source;
     console.log(bigImageSrc);
+  
     const instance = basicLightbox.create(
-      ` <img src="${bigImageSrc}" alt="${images.description}" width="800" height="600"> `,
+      ` <img src="${bigImageSrc}" alt="${e.target.alt}" width="800" height="600"> `,
     {
       onShow: () => {
         document.addEventListener('keyup', closeModal);
